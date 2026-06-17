@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Туынды. Туындының анықтамасы</title>
+<style>
+:root{
+--dark:#1f3348;--accent:#21b6d7;--paper:#f5f7fa;--ok:#5ca86b;--bad:#d86a6a;
+}
+body{font-family:Arial,sans-serif;margin:0;background:var(--paper);color:#222;line-height:1.6}
+header,footer{background:var(--dark);color:#fff;padding:20px}
+nav{display:flex;gap:10px;flex-wrap:wrap;padding:12px;background:#fff;position:sticky;top:0}
+button{background:var(--accent);border:none;padding:10px 14px;border-radius:8px;cursor:pointer}
+main{padding:20px;max-width:1200px;margin:auto}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.card{background:white;padding:16px;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.tag{background:var(--accent);color:white;padding:3px 8px;border-radius:20px}
+.feedback.ok{color:var(--ok)} .feedback.bad{color:var(--bad)}
+svg{background:white;border-radius:12px}
+aside{background:#fff8e8;border-left:5px solid orange;padding:15px}
+@media print{
+nav,button,input[type=range],input[type=text]{display:none!important}
+*{box-shadow:none!important;background:white!important;color:black!important}
+}
+</style>
+</head>
+<body>
+<header>
+<h1 id="title">Туынды. Туындының анықтамасы</h1>
+</header>
+
+<nav>
+<button onclick="setLang('kk')">🇰🇿 Қазақша</button>
+<button onclick="setLang('ru')">🇷🇺 Русский</button>
+<button onclick="window.print()">PDF</button>
+</nav>
+
+<main>
+<section class="card">
+<h2 data-k="intro">Кіріспе</h2>
+<p id="introText"></p>
+</section>
+
+<section>
+<h2 data-k="theory">Теория</h2>
+<div class="grid">
+<div class="card">
+<h3 id="c1"></h3>
+<math><mrow><mi>f'</mi><mo>(</mo><mi>x</mi><mo>)</mo><mo>=</mo><munder><mo>lim</mo><mrow><mi>h</mi><mo>→</mo><mn>0</mn></mrow></munder><mfrac><mrow><mi>f</mi><mo>(</mo><mi>x+h</mi><mo>)</mo><mo>-</mo><mi>f</mi><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mi>h</mi></mfrac></mrow></math>
+</div>
+<div class="card">
+<h3 id="c2"></h3>
+<p id="c2t"></p>
+</div>
+<div class="card">
+<h3 id="c3"></h3>
+<p id="c3t"></p>
+</div>
+</div>
+</section>
+
+<section class="card">
+<h2 id="lab"></h2>
+<p id="labt"></p>
+<input type="range" min="-5" max="5" step="0.1" value="1" id="xRange">
+<span id="xVal">1</span>
+<svg id="graph" width="700" height="300"></svg>
+</section>
+
+<section class="card">
+<h2 id="examples"></h2>
+<div><ins>(x²)' = 2x</ins></div>
+<div><ins>(3x+5)' = 3</ins></div>
+<div><ins>(x³)' = 3x²</ins></div>
+</section>
+
+<section class="card">
+<h2 id="trainer"></h2>
+<div id="tasks"></div>
+</section>
+
+<aside>
+<h3 id="tips"></h3>
+<ul>
+<li id="tip1"></li>
+<li id="tip2"></li>
+<li id="tip3"></li>
+</ul>
+</aside>
+
+<section class="card">
+<h2 id="sum"></h2>
+<p id="sumt"></p>
+</section>
+</main>
+
+<footer>Алгебра және анализ бастамалары, 10 сынып</footer>
+
+<script>
+const tr={
+kk:{
+intro:"Туынды қозғалыс жылдамдығын, дененің өзгеруін, экономикадағы өсуді сипаттайды. <span class='tag'>Жылдамдық</span> <span class='tag'>Физика</span> <span class='tag'>Оптимизация</span>",
+c1:"Туынды анықтамасы",
+c2:"Геометриялық мағынасы",c2t:"Туынды – жанаманың көлбеулік коэффициенті.",
+c3:"Физикалық мағынасы",c3t:"Туынды – лездік өзгеру жылдамдығы.",
+lab:"Интерактивті зертхана",labt:"x мәнін өзгертіп, x² функциясының жанамасын бақылаңыз.",
+examples:"Мысалдар",
+trainer:"Тренажер (10 тапсырма)",
+tips:"Маңызды сәттер",
+tip1:"Шек h→0 болғанда алынады.",
+tip2:"Туынды мен функцияны шатастырмаңыз.",
+tip3:"Тұрақты санның туындысы 0.",
+sum:"Қорытынды",
+sumt:"Туынды – функцияның өзгеру жылдамдығын сипаттайтын негізгі ұғым."
+},
+ru:{
+intro:"Производная описывает скорость движения, изменение величин и процессы роста. <span class='tag'>Скорость</span> <span class='tag'>Физика</span> <span class='tag'>Оптимизация</span>",
+c1:"Определение производной",
+c2:"Геометрический смысл",c2t:"Производная — угловой коэффициент касательной.",
+c3:"Физический смысл",c3t:"Производная — мгновенная скорость изменения.",
+lab:"Интерактивная лаборатория",labt:"Изменяйте x и наблюдайте касательную к функции x².",
+examples:"Примеры",
+trainer:"Тренажёр (10 задач)",
+tips:"Важные моменты",
+tip1:"Предел берётся при h→0.",
+tip2:"Не путайте функцию и производную.",
+tip3:"Производная константы равна 0.",
+sum:"Итоги",
+sumt:"Производная характеризует скорость изменения функции."
+}
+};
+function setLang(l){
+let t=tr[l];
+introText.innerHTML=t.intro;
+c1.textContent=t.c1;c2.textContent=t.c2;c2t.textContent=t.c2t;
+c3.textContent=t.c3;c3t.textContent=t.c3t;
+lab.textContent=t.lab;labt.textContent=t.labt;
+examples.textContent=t.examples;trainer.textContent=t.trainer;
+tips.textContent=t.tips;tip1.textContent=t.tip1;tip2.textContent=t.tip2;tip3.textContent=t.tip3;
+sum.textContent=t.sum;sumt.textContent=t.sumt;
+}
+setLang('kk');
+
+const svg=document.getElementById('graph');
+function draw(){
+let x=parseFloat(xRange.value);
+xVal.textContent=x;
+let m=2*x;
+let y=x*x;
+svg.innerHTML='';
+for(let i=-5;i<=5;i+=0.05){
+ let px=350+i*50, py=250-(i*i)*8;
+ if(i>-5){
+   let p=document.createElementNS("http://www.w3.org/2000/svg","circle");
+   p.setAttribute("cx",px);p.setAttribute("cy",py);p.setAttribute("r",1);
+   svg.appendChild(p);
+ }
+}
+let line=document.createElementNS("http://www.w3.org/2000/svg","line");
+line.setAttribute("x1",0); line.setAttribute("y1",250-((m*(-7)+y))*8);
+line.setAttribute("x2",700); line.setAttribute("y2",250-((m*(7)+y))*8);
+line.setAttribute("stroke","red"); svg.appendChild(line);
+}
+xRange.oninput=draw; draw();
+
+const tasks=[
+["(x²)' при x=3","6"],["(x³)' при x=2","12"],["(5)'","0"],["(7x)'","7"],
+["(x²)' при x=1","2"],["(x²)' при x=5","10"],["(4x)'","4"],["(9)'","0"],
+["(x³)' при x=1","3"],["(2x²)' при x=2","8"]
+];
+tasks.forEach((t,i)=>{
+let d=document.createElement('div');
+d.innerHTML=`<p>${i+1}. ${t[0]}</p>
+<input type="text" id="a${i}">
+<button onclick="check(${i},'${t[1]}')">Проверить</button>
+<div id="f${i}" class="feedback"></div>`;
+document.getElementById('tasks').appendChild(d);
+});
+function check(i,a){
+let v=document.getElementById('a'+i).value.trim().toLowerCase();
+let f=document.getElementById('f'+i);
+if(v===a){f.textContent='✓';f.className='feedback ok';}
+else{f.textContent='✗';f.className='feedback bad';}
+}
+</script>
+</body>
+</html>
